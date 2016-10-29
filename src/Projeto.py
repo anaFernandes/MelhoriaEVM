@@ -47,7 +47,7 @@ class Projeto(object):
     def ChangeElementIdAfterInsert(self):
         querySelectSingleElement = "SELECT id_projeto FROM projetos WHERE nome='" + str(self.nome) + "'"
         out = Database.get(querySelectSingleElement)
-        Projeto(out[0], self.nome, self.dt_inicio, self.dt_fim, self.bac, self.duracao, self.semestre), self.cpi_projeto
+        Projeto(out[0], self.nome, self.dt_inicio, self.dt_fim, self.bac, self.duracao, self.semestre, self.cpi_projeto)
 
     #Métodos Estáticos
     @staticmethod

@@ -12,7 +12,7 @@ class Atividade(object):
     todasAtividades = list()
 
     #Construtor
-    def __init__ (self, id, esforco_est, esforco_real, responsavel, fases_id_fase, projetos_id_projeto, num_requisito) :
+    def __init__ (self, id, esforco_est, esforco_real, responsavel, fases_id_fase, projetos_id_projeto, num_requisito):
         jaExite = False
         # Compara o nome da fase e o nome do projeto
         # Caso já exista retorna a variável True
