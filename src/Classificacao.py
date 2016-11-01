@@ -1,5 +1,4 @@
-
-import math
+# coding=UTF-8
 
 class Classificacao(object):
 

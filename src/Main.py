@@ -1,4 +1,5 @@
 # coding=UTF-8
+
 from ValidaData import ValidaData
 from Projeto import Projeto
 from Fase import Fase
