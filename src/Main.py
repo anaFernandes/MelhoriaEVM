@@ -9,6 +9,7 @@ from Calculo import Calculo
 from Database import Database
 from K_Means import K_Means
 from Responsavel import Responsavel
+from Classificacao import Classificacao
 
 import numpy as np
 
@@ -204,8 +205,8 @@ def CalculaEVM():
         if(id_projeto > 13):
             i=0
             lista_duracao, lista_cpi_projeto, lista_nome_fase, lista_cpi_fase, lista_id_projeto_fase, lista_real_acum_fase, \
-            lista_est_acum_projeto, lista_real_acum_projeto, lista_est_acum_fase, lista_perfil_equipe_fase, lista_num_atividades= \
-                [], [], [], [], [], [], [], [], [], [], []
+            lista_est_acum_projeto, lista_real_acum_projeto, lista_est_acum_fase, lista_perfil_equipe_fase, lista_num_atividades, \
+            lista_data_inicio_projeto, lista_data_fim_projeto = [], [], [], [], [], [], [], [], [], [], []
 
             for fase in Fase.todas_fases:
                 j = 0
@@ -216,6 +217,8 @@ def CalculaEVM():
                                 if (projeto.id == Fase.todas_fases[i].projetos_id_projeto):
                                     lista_duracao.append(Projeto.todos_projetos[j].duracao)
                                     lista_cpi_projeto.append(Projeto.todos_projetos[j].cpi_projeto)
+                                    lista_data_inicio_projeto.append(Projeto.todos_projetos[j].data_inicio)
+                                    lista_data_fim_projeto.append(Projeto.todos_projetos[j].data_fim)
                                 j += 1
                             lista_nome_fase.append(Fase.todas_fases[i].nome)
                             lista_cpi_fase.append(Fase.todas_fases[i].cpi_hist)
@@ -230,10 +233,13 @@ def CalculaEVM():
 
             fases_cluster= np.array(zip(lista_duracao, lista_nome_fase, lista_cpi_fase, lista_id_projeto_fase,
                                         lista_real_acum_fase, lista_est_acum_fase, lista_est_acum_projeto, lista_real_acum_projeto,
-                                        lista_perfil_equipe_fase, lista_num_atividades, lista_cpi_projeto))
+                                        lista_perfil_equipe_fase, lista_num_atividades, lista_cpi_projeto, lista_data_inicio_projeto,
+                                        lista_data_fim_projeto))
             Agrupamento = K_Means(Fase.todas_fases)
             implementacao, teste, elaboracao, correcao = Agrupamento.SeparaFases(fases_cluster)
             dados_projeto = Agrupamento.JuntaFases(fases_cluster, lista_id_projeto_fase)
+
+            dados_projeto = Classificacao.JuntaFases()
 
             # lista_cluster_teste = Agrupamento.Kmeans(teste)
             # lista_cluster_implementacao = Agrupamento.Kmeans(implementacao)
@@ -241,7 +247,7 @@ def CalculaEVM():
             # lista_cluster_elaboracao = Agrupamento.Kmeans(elaboracao)
             # lista_cluster_projeto = Agrupamento.Kmeans_projeto(dados_projeto)
 
-            lista_classificador_projeto = Agrupamento.DecisionTree(dados_projeto)
+            # lista_classificador_projeto = Agrupamento.DecisionTree(dados_projeto)
 
             # media_clusters_teste_0, media_clusters_teste_1, media_clusters_teste_2, media_clusters_teste_3 = Agrupamento.Media_Clusters(cluster_teste_0, cluster_teste_1, cluster_teste_2, cluster_teste_3)
             # media_clusters_implementacao_0, media_clusters_implementacao_1 = Agrupamento.Media_Clusters(cluster_implementacao_0, cluster_implementacao_1)

@@ -106,10 +106,11 @@ class K_Means(object):
         cluster_fase = np.array(list(zip(cluster_0, cluster_1, cluster_2, cluster_3, cluster_4)))
         return cluster_fase
 
+
     def JuntaFases(self, fases_cluster, id_projeto):
         # lista_duracao, lista_nome_fase, lista_cpi_fase, lista_id_projeto_fase, lista_real_acum_fase,
         # lista_est_acum_fase, lista_real_acum_projeto, lista_est_acum_projeto, lista_perfil_equipe_fase,
-        # lista_num_atividades, lista_cpi_projeto
+        # lista_num_atividades, lista_cpi_projeto, lista_data_inicio_projeto, lista_data_fim_projeto
         lista_id_projeto, lista_projetos = [], []
         projeto_anterior = fases_cluster[3][0]
         for id_projeto in fases_cluster:
