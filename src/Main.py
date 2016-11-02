@@ -207,7 +207,7 @@ def CalculaEVM():
             i=0
             lista_duracao, lista_cpi_projeto, lista_nome_fase, lista_cpi_fase, lista_id_projeto_fase, lista_real_acum_fase, \
             lista_est_acum_projeto, lista_real_acum_projeto, lista_est_acum_fase, lista_perfil_equipe_fase, lista_num_atividades, \
-            lista_data_inicio_projeto, lista_data_fim_projeto = [], [], [], [], [], [], [], [], [], [], []
+            lista_data_inicio_projeto, lista_data_fim_projeto = [], [], [], [], [], [], [], [], [], [], [], [], []
 
             for fase in Fase.todas_fases:
                 j = 0
@@ -218,8 +218,8 @@ def CalculaEVM():
                                 if (projeto.id == Fase.todas_fases[i].projetos_id_projeto):
                                     lista_duracao.append(Projeto.todos_projetos[j].duracao)
                                     lista_cpi_projeto.append(Projeto.todos_projetos[j].cpi_projeto)
-                                    lista_data_inicio_projeto.append(Projeto.todos_projetos[j].data_inicio)
-                                    lista_data_fim_projeto.append(Projeto.todos_projetos[j].data_fim)
+                                    lista_data_inicio_projeto.append(Projeto.todos_projetos[j].dt_inicio)
+                                    lista_data_fim_projeto.append(Projeto.todos_projetos[j].dt_fim)
                                 j += 1
                             lista_nome_fase.append(Fase.todas_fases[i].nome)
                             lista_cpi_fase.append(Fase.todas_fases[i].cpi_hist)
@@ -240,7 +240,8 @@ def CalculaEVM():
             implementacao, teste, elaboracao, correcao = Agrupamento.SeparaFases(fases_cluster)
             dados_projeto = Agrupamento.JuntaFases(fases_cluster, lista_id_projeto_fase)
 
-            dados_projeto = Classificacao.JuntaFases()
+            implementacao, teste, elaboracao, correcao = Classificacao.SeparaFases(fases_cluster, lista_id_projeto_fase)
+            dados_projeto = Classificacao.JuntaFases(fases_cluster, lista_id_projeto_fase)
 
             # lista_cluster_teste = Agrupamento.Kmeans(teste)
             # lista_cluster_implementacao = Agrupamento.Kmeans(implementacao)

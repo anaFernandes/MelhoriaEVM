@@ -5,6 +5,41 @@ class Classificacao(object):
     def __init__(self, projetosFromDatabase):
         self.projetosFromDatabase = projetosFromDatabase
 
+    def SeparaFases(self, cluster_fases):
+        #Seleciona os ids dos projetos sem repetir
+        projeto_anterior = cluster_fases[0][3]
+        lista_id_projeto = []
+        lista_id_projeto.append(projeto_anterior)
+
+        for id_projeto in cluster_fases:
+            if(projeto_anterior != id_projeto[3]):
+                lista_id_projeto.append(id_projeto[3])
+            projeto_anterior = id_projeto[3]
+
+        implementacao, teste, elaboracao, correcao, copy = [], [], [], [], []
+
+        for id_projeto in lista_id_projeto:
+            for fase in cluster_fases:
+                if (id_projeto == fase[3]):
+                    if (fase[1] == "implementacao"):
+                        copy=np.array(fase).tolist()
+                        implementacao.append(copy)
+                    elif (fase[1] == "elaboracao"):
+                        copy = np.array(fase).tolist()
+                        elaboracao.append(copy)
+                    elif (fase[1] == "testes"):
+                        copy = np.array(fase).tolist()
+                        teste.append(copy)
+                    elif (fase[1] == "correcao"):
+                        copy = np.array(fase).tolist()
+                        correcao.append(copy)
+
+        imple = np.array(implementacao)
+        elab = np.array(elaboracao)
+        test = np.array(teste)
+        corr = np.array(correcao)
+        return imple, test, elab, corr
+
     # def AgrupaPelaData(self, fases_cluster, id_projeto):
 
     # Juntas as fases em um unico projeto, para a previsão do cpi será necessario a utilização do perfil da equipe, esforco estimado
