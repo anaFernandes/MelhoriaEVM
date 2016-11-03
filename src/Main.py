@@ -240,6 +240,7 @@ def CalculaEVM():
             implementacao, teste, elaboracao, correcao = Agrupamento.SeparaFases(fases_cluster)
             dados_projeto = Agrupamento.JuntaFases(fases_cluster, lista_id_projeto_fase)
 
+            Classificacao = Classificacao(Fase.todas_fases)
             implementacao, teste, elaboracao, correcao = Classificacao.SeparaFases(fases_cluster, lista_id_projeto_fase)
             dados_projeto = Classificacao.JuntaFases(fases_cluster, lista_id_projeto_fase)
 

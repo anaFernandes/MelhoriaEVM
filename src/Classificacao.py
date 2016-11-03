@@ -1,25 +1,30 @@
 # coding=UTF-8
 
+import numpy as np
+
 class Classificacao(object):
 
-    def __init__(self, projetosFromDatabase):
-        self.projetosFromDatabase = projetosFromDatabase
+    def __init__(self, todas_fases):
+        self.todas_fases = todas_fases
 
-    def SeparaFases(self, cluster_fases):
+    def SeparaFases(self, lista_fases):
         #Seleciona os ids dos projetos sem repetir
-        projeto_anterior = cluster_fases[0][3]
+        projeto_anterior = lista_fases[0][3]
         lista_id_projeto = []
         lista_id_projeto.append(projeto_anterior)
 
-        for id_projeto in cluster_fases:
-            if(projeto_anterior != id_projeto[3]):
-                lista_id_projeto.append(id_projeto[3])
-            projeto_anterior = id_projeto[3]
+        #Cria uma lista de ids de projetos, sem repetir o id
+        for fases in lista_fases:
+            if(projeto_anterior != fases[3]):
+                lista_id_projeto.append(fases[3])
+            projeto_anterior = fases[3]
 
         implementacao, teste, elaboracao, correcao, copy = [], [], [], [], []
 
+        #Separa cada fase dentro da fase correspondente.
+        #Para conseguir fazer o append na fase, primeiro tem q transformar o array em lista
         for id_projeto in lista_id_projeto:
-            for fase in cluster_fases:
+            for fase in lista_fases:
                 if (id_projeto == fase[3]):
                     if (fase[1] == "implementacao"):
                         copy=np.array(fase).tolist()
